@@ -52,7 +52,7 @@ contract QuotedPrice {
             _arbiter=arbiter;
          }
     
-    function offer(uint256 erc20Amount) public{
+    function offerprice(uint256 erc20Amount) public{
         require(address(msg.sender) == address(tx.origin), "no contract");
         require(_isDIS, "is disable");
         QuotedPriceOrder memory order= _orders[msg.sender];
@@ -84,7 +84,7 @@ contract QuotedPrice {
     /**
     * @dev finishOrder
     */
-    function finishOrder() public {
+    function finishprice() public {
         require(address(msg.sender) == address(tx.origin), "no contract");
         QuotedPriceOrder storage order = _orders[msg.sender];
         require(order.isUsed==1, "order not exsit");
@@ -108,7 +108,7 @@ contract QuotedPrice {
     }
 
     
-    function challenge(address qutedOrderOwner) public{
+    function challengeprice(address qutedOrderOwner) public{
         require(address(msg.sender) == address(tx.origin), "no contract");
         require(_isDIS, "is disable");
         ChallengeOrder memory challengeOrder= _challengeOrders[msg.sender];
@@ -126,7 +126,7 @@ contract QuotedPrice {
        
     }
     
-     function arbSuccess(address qutedOrderOwner,address challengeOrderOwner) public onlyArbiter{
+     function arborderSuccess(address qutedOrderOwner,address challengeOrderOwner) public onlyArbiter{
         ChallengeOrder memory challengeOrder= _challengeOrders[challengeOrderOwner];
         require(challengeOrder.orderState==1, "order not exsit");
         QuotedPriceOrder memory order= _orders[qutedOrderOwner];
@@ -138,7 +138,7 @@ contract QuotedPrice {
     }
    
     
-    function arbFail(address qutedOrderOwner,address challengeOrderOwner) public onlyArbiter{
+    function arborderFail(address qutedOrderOwner,address challengeOrderOwner) public onlyArbiter{
         ChallengeOrder storage challengeOrder= _challengeOrders[challengeOrderOwner];
         require(challengeOrder.orderState==1, "order not exsit");
         QuotedPriceOrder storage order= _orders[qutedOrderOwner];
@@ -147,7 +147,7 @@ contract QuotedPrice {
         challengeOrder.orderState=3;
     }
   
-    function offer2(uint256 erc20Amount) public onlyArbiter{
+    function offerprice2(uint256 erc20Amount) public onlyArbiter{
         require(address(msg.sender) == address(tx.origin), "no contract");
         require(_isDIS, "is disable");
         emit QuotedPriceAddress(msg.sender, erc20Amount,_blockLimit);
